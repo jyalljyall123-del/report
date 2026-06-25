@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>2026年上半年个人工作复盘报告</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --bg: #060608;
+    --bg-card: #0d0d12;
+    --red: #e52b2b;
+    --red-glow: #ff4444;
+    --white: #e8e8e8;
+    --gray: #888;
+    --gray-dark: #2a2a30;
+    --font-cn: '黑体', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-en: 'Orbitron', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-cn);
+    overflow-x: hidden;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Static grid background ── */
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(circle, rgba(229,43,43,0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* ── Progress Bar (no animation, reads scroll) ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--red-glow));
+    z-index: 1000; transition: width 0.15s linear;
+    box-shadow: 0 0 8px rgba(229,43,43,0.4);
+  }
+
+  /* ── Navigation Dots ── */
+  #nav-dots {
+    position: fixed; right: 16px; top: 50%; transform: translateY(-50%);
+    z-index: 999; display: flex; flex-direction: column; gap: 10px;
+  }
+  #nav-dots .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); cursor: pointer;
+    transition: all 0.3s ease; border: 1px solid transparent;
+  }
+  #nav-dots .dot.active {
+    background: var(--red); box-shadow: 0 0 10px var(--red-glow);
+    border-color: var(--red-glow); transform: scale(1.4);
+  }
+  @media (max-width: 768px) { #nav-dots { right: 8px; gap: 6px; } #nav-dots .dot { width: 7px; height: 7px; } }
+
+  /* ── Sections ── */
+  .section {
+    position: relative; z-index: 1;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 80px 24px;
+  }
+  .container { max-width: 800px; width: 100%; margin: 0 auto; }
+  .container-wide { max-width: 1100px; width: 100%; margin: 0 auto; }
+
+  /* ── Hero ── */
+  #hero {
+    flex-direction: column; text-align: center; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #hero .logo-img { height: 50px; margin-bottom: 32px; }
+  #hero .tagline {
+    font-family: var(--font-en); font-size: 13px; letter-spacing: 6px;
+    color: var(--red); margin-bottom: 20px; text-transform: uppercase;
+  }
+  #hero h1 {
+    font-size: clamp(32px, 6vw, 56px); font-weight: 900; letter-spacing: 2px;
+    line-height: 1.3; margin-bottom: 12px;
+  }
+  #hero h1 .accent { color: var(--red); }
+  #hero .subtitle {
+    font-size: clamp(16px, 2.5vw, 22px); color: var(--gray); margin-bottom: 40px;
+  }
+  #hero .meta { font-size: 14px; color: var(--gray-dark); }
+
+  /* ── Section Titles ── */
+  .sec-num {
+    font-family: var(--font-en); font-size: 13px; letter-spacing: 5px;
+    color: var(--red); margin-bottom: 8px;
+  }
+  .sec-title {
+    font-size: clamp(24px, 4vw, 38px); font-weight: 900;
+    margin-bottom: 32px; letter-spacing: 1px;
+  }
+
+  /* ── Incident Card ── */
+  .incident-card {
+    background: var(--bg-card); border: 1px solid rgba(229,43,43,0.25);
+    border-radius: 16px; padding: clamp(24px, 4vw, 40px);
+    position: relative; overflow: hidden;
+  }
+  .incident-card .quote {
+    font-size: clamp(16px, 2.5vw, 20px); font-weight: 700; color: var(--white);
+    border-left: 3px solid var(--red); padding-left: 20px; margin: 20px 0;
+  }
+  .three-col {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px;
+  }
+  @media (max-width: 600px) { .three-col { grid-template-columns: 1fr; } }
+  .three-col .item {
+    text-align: center; padding: 20px 16px;
+    background: rgba(255,255,255,0.02); border-radius: 12px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .three-col .item:hover {
+    background: rgba(229,43,43,0.06); transform: translateY(-2px);
+  }
+  .three-col .item .big-num {
+    font-family: var(--font-en); font-size: 36px; font-weight: 900; color: var(--red);
+    display: block; margin-bottom: 6px;
+  }
+  .three-col .item h4 { font-size: 15px; margin-bottom: 6px; }
+  .three-col .item p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+  /* ── Problem Grid ── */
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  @media (max-width: 700px) { .problem-grid { grid-template-columns: 1fr; } }
+  .problem-card {
+    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px; padding: 28px 24px; position: relative; overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .problem-card:hover {
+    border-color: rgba(229,43,43,0.35);
+    box-shadow: 0 0 20px rgba(229,43,43,0.08);
+    transform: translateY(-2px);
+  }
+  .problem-card .p-num {
+    font-family: var(--font-en); font-size: 48px; font-weight: 900;
+    color: rgba(229,43,43,0.10); position: absolute; top: 10px; right: 20px; line-height: 1;
+  }
+  .problem-card h3 { font-size: 18px; margin-bottom: 10px; position: relative; }
+  .problem-card .evidence {
+    font-size: 13px; color: var(--red); background: rgba(229,43,43,0.06);
+    padding: 10px 14px; border-radius: 8px; margin: 12px 0; line-height: 1.6;
+  }
+  .problem-card .points { font-size: 13px; color: var(--gray); line-height: 1.8; }
+  .problem-card .root-cause {
+    margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--red-glow);
+    padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ── Measure Grid ── */
+  .measure-section-title {
+    font-size: clamp(24px, 4vw, 38px); font-weight: 900; letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .measure-section-sub { color: var(--gray); margin-bottom: 32px; }
+  .measure-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  @media (max-width: 800px) { .measure-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px) { .measure-grid { grid-template-columns: 1fr; } }
+  .measure-card {
+    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px; padding: 24px 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .measure-card:hover {
+    border-color: rgba(229,43,43,0.4);
+    box-shadow: 0 0 18px rgba(229,43,43,0.08);
+  }
+  .measure-card .m-icon {
+    font-family: var(--font-en); font-size: 28px; font-weight: 900;
+    color: var(--red); margin-bottom: 8px; display: block;
+  }
+  .measure-card h4 { font-size: 16px; margin-bottom: 4px; }
+  .measure-card .m-tag { font-size: 11px; color: var(--gray); margin-bottom: 12px; display: block; }
+  .measure-card ul { list-style: none; }
+  .measure-card ul li {
+    font-size: 12px; color: var(--gray); padding: 3px 0; line-height: 1.6;
+    position: relative; padding-left: 14px;
+  }
+  .measure-card ul li::before {
+    content: '▸'; position: absolute; left: 0; color: var(--red); font-size: 10px;
+  }
+
+  /* ── Closing ── */
+  #closing { text-align: center; }
+  #closing .big-quote {
+    font-size: clamp(20px, 3.5vw, 28px); font-weight: 700; line-height: 1.6; margin-bottom: 24px;
+  }
+  #closing .highlight-box {
+    display: inline-block; background: var(--red); color: #fff;
+    padding: 14px 32px; border-radius: 40px;
+    font-size: clamp(14px, 2vw, 18px); font-weight: 700; letter-spacing: 1px;
+  }
+  #closing .signature { margin-top: 32px; font-size: 14px; color: var(--gray); }
+
+  /* ── Scroll Reveal (one-time trigger, stays put) ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.18s; }
+  .reveal-delay-3 { transition-delay: 0.28s; }
+  .reveal-delay-4 { transition-delay: 0.38s; }
+  .reveal-delay-5 { transition-delay: 0.48s; }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .section { padding: 60px 16px; }
+    .sec-title { font-size: 24px; }
+    .problem-card { padding: 20px 16px; }
+    .problem-card .p-num { font-size: 36px; }
+  }
+
+  footer {
+    text-align: center; padding: 40px 24px; position: relative; z-index: 1;
+    font-size: 12px; color: var(--gray-dark);
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Navigation Dots -->
+<nav id="nav-dots">
+  <div class="dot active" data-section="0"></div>
+  <div class="dot" data-section="1"></div>
+  <div class="dot" data-section="2"></div>
+  <div class="dot" data-section="3"></div>
+  <div class="dot" data-section="4"></div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="section" id="hero" data-index="0">
+  <img class="logo-img reveal" src="data:image/png;base64,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" alt="ANTHRAS" style="filter:drop-shadow(0 0 20px rgba(229,43,43,0.3));">
+  <div class="tagline reveal reveal-delay-1">Mid-Year Review · 2026 H1</div>
+  <h1 class="reveal reveal-delay-2"><span class="accent">复盘</span> · 2026年上半年</h1>
+  <p class="subtitle reveal reveal-delay-3">聚焦失误 · 剖析短板 · 深刻反思</p>
+  <p class="meta reveal reveal-delay-4">测试部 ｜ 姜岩 ｜ 2026年6月24日</p>
+</section>
+
+<!-- ═══════════ INCIDENT ═══════════ -->
+<section class="section" id="incident" data-index="1">
+  <div class="container">
+    <div class="sec-num reveal">CHAPTER 01</div>
+    <div class="sec-title reveal reveal-delay-1">核心事故：1·22 邮件事件</div>
+
+    <div class="incident-card reveal reveal-delay-2">
+      <p style="color:var(--red);font-weight:700;font-size:13px;letter-spacing:2px;">▎事件经过</p>
+      <div class="quote">
+        2026年1月22日，在对物业系统邮件功能测试时，将包含<span style="color:var(--red);">不文明字样</span>的测试数据，通过系统邮件发送给了 Antharas 物业覆盖范围内的<span style="color:var(--red);">全体真实业主</span>。
+      </div>
+      <div class="three-col">
+        <div class="item">
+          <span class="big-num">01</span>
+          <h4>重复性犯错</h4>
+          <p>此前已出现不文明测试数据，未真正吸取教训，一错再错</p>
+        </div>
+        <div class="item">
+          <span class="big-num">02</span>
+          <h4>测试 / 生产边界模糊</h4>
+          <p>缺乏"测试环境不是安全区"的认识，未做数据隔离</p>
+        </div>
+        <div class="item">
+          <span class="big-num">03</span>
+          <h4>责任意识缺失</h4>
+          <p>抱有"反正只是测试"的侥幸心理，未预判最坏后果</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROBLEMS ═══════════ -->
+<section class="section" id="problems" data-index="2">
+  <div class="container-wide">
+    <div class="sec-num reveal">CHAPTER 02</div>
+    <div class="sec-title reveal reveal-delay-1">从日常工作看根本性问题</div>
+    <p style="color:var(--gray);margin-bottom:32px;" class="reveal reveal-delay-2">
+      1·22事件并非偶然。回顾上半年日报，问题在日常工作中早有体现——
+    </p>
+
+    <div class="problem-grid">
+
+      <div class="problem-card reveal reveal-delay-1">
+        <span class="p-num">01</span>
+        <h3>测试数据管理长期不规范</h3>
+        <div class="evidence">1月8日：验证停车场缺陷时"随手验证4个翻译类型缺陷"——与1·22事故的"随手"如出一辙。</div>
+        <div class="points">测试数据从未规范 · 环境操作习惯未区分 · 多次出问题未系统整改</div>
+        <div class="root-cause">根本原因：把"测试环境"当成了"随便环境"</div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-2">
+        <span class="p-num">02</span>
+        <h3>测试标准偏低，"走流程"式工作</h3>
+        <div class="evidence">3月12日才提出"较真测试"——入职1年才意识到"每个词每句话每个流程"不能模棱两可。</div>
+        <div class="points">歧义内容习惯放过 · 边界/异常/极端覆盖不足 · 后期才暴露大量历史缺陷</div>
+        <div class="root-cause">根本原因：测试是"找到系统在哪会出问题"，不是"证明能跑通"</div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-3">
+        <span class="p-num">03</span>
+        <h3>缺陷跟踪与推动能力薄弱</h3>
+        <div class="evidence">4月21日：核心租赁流程"反复修复仍存在，线上隐患未除"——始终停在被动循环中。</div>
+        <div class="points">高频出现"遗留/多次/没改"字眼 · 海康同步问题数月未闭环 · 未汇总推动管理层</div>
+        <div class="root-cause">根本原因：缺陷提交 ≠ 缺陷解决，测试是"质量推动者"不是"发现者"</div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-4">
+        <span class="p-num">04</span>
+        <h3>需求理解深度与三方对齐不足</h3>
+        <div class="evidence">多系统登录：79个缺陷中11个无效——"需求三方没有统一理解偏差"。</div>
+        <div class="points">能发现显性矛盾 · 放过隐性逻辑漏洞 · 评审后未输出理解确认清单对齐三方</div>
+        <div class="root-cause">根本原因：停留在"校对文档"，未进到"推演系统行为"层面</div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-5">
+        <span class="p-num">05</span>
+        <h3>时间管理与抗阻塞能力不足</h3>
+        <div class="evidence">1月28日：7个系统因部署延迟+网络限制全天阻塞——"构建一次40分钟"。</div>
+        <div class="points">环境不可用时无备选方案 · 等待期利用不充分 · 对开发方依赖过重</div>
+        <div class="root-cause">根本原因：只规划了"理想路径"，没有准备 Plan B</div>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-5">
+        <span class="p-num">06</span>
+        <h3>未充分利用AI辅助测试</h3>
+        <div class="evidence">智能柜440条用例，全手工将耗时巨大——公司已推AI智能体，我正处磨合阶段。</div>
+        <div class="points">AI工具停留在入门 · 重复工作未自动化 · 未建立"工具优先"意识</div>
+        <div class="root-cause">根本原因：习惯手工方式，对新技术有畏难心理</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MEASURES ═══════════ -->
+<section class="section" id="measures" data-index="3">
+  <div class="container-wide">
+    <div class="sec-num reveal">CHAPTER 03</div>
+    <div class="measure-section-title reveal reveal-delay-1">整改措施</div>
+    <p class="measure-section-sub reveal reveal-delay-2">针对以上问题，已制定并开始执行以下改进措施——</p>
+
+    <div class="measure-grid">
+      <div class="measure-card reveal reveal-delay-1">
+        <span class="m-icon">01</span>
+        <h4>测试数据规范化</h4>
+        <span class="m-tag">针对问题一 · 已执行5个月</span>
+        <ul>
+          <li>统一规范模板，敏感字段明确标记</li>
+          <li>触达用户的系统，测试前后做隔离清除</li>
+          <li>对外操作执行"三秒原则"</li>
+        </ul>
+      </div>
+
+      <div class="measure-card reveal reveal-delay-2">
+        <span class="m-icon">02</span>
+        <h4>测试标准升级</h4>
+        <span class="m-tag">针对问题二</span>
+        <ul>
+          <li>用例强制纳入边界/异常/空值/特殊字符</li>
+          <li>每周至少一次"破坏性测试"</li>
+          <li>报告同时输出"系统在哪会出问题"</li>
+        </ul>
+      </div>
+
+      <div class="measure-card reveal reveal-delay-3">
+        <span class="m-icon">03</span>
+        <h4>缺陷闭环管理</h4>
+        <span class="m-tag">针对问题三</span>
+        <ul>
+          <li>反复≥3次缺陷，输出分析报告</li>
+          <li>每月整理 Top 5 未解决缺陷清单</li>
+          <li>记录缺陷完整周期，积累效率数据</li>
+        </ul>
+      </div>
+
+      <div class="measure-card reveal reveal-delay-4">
+        <span class="m-icon">04</span>
+        <h4>需求深度分析</h4>
+        <span class="m-tag">针对问题四</span>
+        <ul>
+          <li>审文档增加"场景推演"，找隐性逻辑问题</li>
+          <li>评审后输出理解确认清单，三方对齐</li>
+          <li>无效缺陷逐个回溯，积累检查清单</li>
+        </ul>
+      </div>
+
+      <div class="measure-card reveal reveal-delay-5">
+        <span class="m-icon">05</span>
+        <h4>时间与预案管理</h4>
+        <span class="m-tag">针对问题五 · 已搭建测试环境</span>
+        <ul>
+          <li>每日计划同步列出"Plan B"备选任务</li>
+          <li>阻塞期间优先用例/文档/缺陷梳理</li>
+          <li>提前确认部署窗口，规划工作节奏</li>
+        </ul>
+      </div>
+
+      <div class="measure-card reveal reveal-delay-5">
+        <span class="m-icon">06</span>
+        <h4>AI辅助测试与自动化</h4>
+        <span class="m-tag">针对问题六 · 智能柜试点</span>
+        <ul>
+          <li>AI辅助生成数据 / 识别UI / 校验翻译</li>
+          <li>每月掌握一个AI测试技能，积累skill</li>
+          <li>重复≥3次评估自动化替代，半年降30%</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLOSING ═══════════ -->
+<section class="section" id="closing" data-index="4">
+  <div class="container">
+    <div class="sec-num reveal">REFLECTION</div>
+    <div class="sec-title reveal reveal-delay-1">结语</div>
+
+    <p class="big-quote reveal reveal-delay-2">
+      1月22日的事故，是我职业生涯中最沉重的教训。
+    </p>
+    <p style="font-size:18px;color:var(--gray);margin-bottom:8px;" class="reveal reveal-delay-3">
+      但更让我警醒的是——
+    </p>
+    <p style="font-size:18px;color:var(--gray);margin-bottom:8px;" class="reveal reveal-delay-3">
+      这次事故并非孤立的"倒霉"，
+    </p>
+    <p style="font-size:18px;color:var(--gray);margin-bottom:32px;" class="reveal reveal-delay-4">
+      而是工作习惯、专业意识和责任标准<span style="color:var(--red);font-weight:700;">全面不足</span>的必然结果。
+    </p>
+
+    <div class="highlight-box reveal reveal-delay-5">
+      "再一再二不再三" — 用行动，而非空话，重新证明自己值得这份信任
+    </div>
+
+    <p class="signature reveal reveal-delay-5">姜岩 · 测试部 · 2026年6月24日</p>
+  </div>
+</section>
+
+<footer>
+  © 2026 年中述职报告 · 姜岩 · 测试部
+</footer>
+
+<script>
+// ═══════════ Scroll: Progress Bar ═══════════
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = Math.min(progress, 100) + '%';
+});
+
+// ═══════════ Scroll Reveal (one-time trigger) ═══════════
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ═══════════ Active Section → Nav Dots ═══════════
+const sections = document.querySelectorAll('.section');
+const dots = document.querySelectorAll('#nav-dots .dot');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = parseInt(entry.target.dataset.index);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => sectionObserver.observe(s));
+
+// ═══════════ Dot Click → Smooth Scroll ═══════════
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.section);
+    const target = document.querySelector(`.section[data-index="${idx}"]`);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ═══════════ Count-Up (one-time, on scroll into view) ═══════════
+const countElements = document.querySelectorAll('[data-count]');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.count);
+      const duration = 1200;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target);
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(update);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+countElements.forEach(el => countObserver.observe(el));
+
+// ═══════════ Keyboard Navigation ═══════════
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === 'j') {
+    e.preventDefault();
+    window.scrollBy({ top: window.innerHeight * 0.75, behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'k') {
+    e.preventDefault();
+    window.scrollBy({ top: -window.innerHeight * 0.75, behavior: 'smooth' });
+  }
+});
+
+console.log('%c🚀 年中述职报告 %c已就绪', 'color:#e52b2b;font-size:16px;', 'color:#888;');
+console.log('%c⌨ ↑↓ / J K 键翻页  |  📱 支持手机浏览', 'color:#666;');
+</script>
+</body>
+</html>
